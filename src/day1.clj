@@ -11,16 +11,12 @@
        ->nums
        (reduce +)))
 
-(defn inf-loop [xs]
-  (lazy-cat xs (inf-loop xs)))
-
 (defn part2 [input]
-  (loop [nums (-> input ->nums inf-loop) sum 0 sums-seen #{0}]
+  (loop [nums (-> input ->nums cycle) sum 0 sums-seen #{0}]
     (let [new-sum (+ (first nums) sum)]
       (if (sums-seen new-sum)
         new-sum
         (recur (rest nums) new-sum (conj sums-seen new-sum))))))
-
 
 (defn -main []
   (println
